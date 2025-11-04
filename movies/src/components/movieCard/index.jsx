@@ -15,7 +15,7 @@ import { Link } from "react-router";
 import Avatar from '@mui/material/Avatar';
 import React, { useContext  } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
-
+import StarsIcon from "@mui/icons-material/Stars";
 
 
 export default function MovieCard({ movie, action }) {
@@ -32,22 +32,32 @@ export default function MovieCard({ movie, action }) {
     addToFavorites(movie);
   };
 
+  const { mustWatch } = useContext(MoviesContext);
+
   return (
     <Card>
-      <CardHeader
-        avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
-        title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
-          </Typography>
-        }
-      />
+<CardHeader
+  avatar={
+    <>
+      {movie.favorite ? (
+        <Avatar sx={{ backgroundColor: "red", marginRight: "4px" }}>
+          <FavoriteIcon />
+        </Avatar>
+      ) : null}
+
+      {mustWatch.includes(movie.id) ? (
+        <Avatar sx={{ backgroundColor: "purple" }}>
+          <StarsIcon />
+        </Avatar>
+      ) : null}
+    </>
+  }
+  title={
+    <Typography variant="h5" component="p">
+      {movie.title}
+    </Typography>
+  }
+/>
       <CardMedia
         sx={{ height: 500 }}
         image={
